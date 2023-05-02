@@ -1,9 +1,22 @@
-﻿namespace TodoApp.Web.Pages;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public class IndexModel : TodoAppPageModel
+namespace TodoApp.Web.Pages
 {
-    public void OnGet()
+    public class IndexModel : TodoAppPageModel
     {
+        public List<TodoItemDto> TodoItems { get; set; }
 
+        private readonly ITodoAppService _todoAppService;
+
+        public IndexModel(ITodoAppService todoAppService)
+        {
+            _todoAppService = todoAppService;
+        }
+
+        public async Task OnGetAsync()
+        {
+            TodoItems = await _todoAppService.GetListAsync();
+        }
     }
 }
